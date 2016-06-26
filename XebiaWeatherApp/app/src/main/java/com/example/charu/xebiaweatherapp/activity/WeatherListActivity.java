@@ -115,7 +115,7 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
             weatherDataModel.setDailyTempModelList(postsList);
 
             ImageLoader imageLoader = XebiaWeatherMainApplication.getInstance().getImageLoader();
-            for (int i = 0; i < weatherDataModel.getDailyTempModelList().size(); i++) {
+            for (int i = 0; i < weatherDataModel.getDailyTempModelList().size();) {
                 String iconUrl = UrlConstants.fetchIconUrl + weatherDataModel.getDailyTempModelList().get(i).getWeatherModel().get(0).getIcon() + ".png";
                 this.position = i;
                 Log.e("nikhil", "iconUrl "+iconUrl);
@@ -133,7 +133,7 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
                             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                             byte[] byteArray = stream.toByteArray();
                             Log.e("nikhil","Byte Array Lenghth:"+byteArray.length);
-                            weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).setImageByteArray(byteArray);
+                            weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).setMyImageBitMap(response.getBitmap());
                         }
                     }
 
@@ -142,6 +142,7 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
                         Log.e("nikhil", "Image Load Error: " + error.getMessage());
                     }
                 });
+                i++;
             }
             if (weatherDataModel != null) {
                 this.listAdapter.setWeatherDataModel(weatherDataModel);

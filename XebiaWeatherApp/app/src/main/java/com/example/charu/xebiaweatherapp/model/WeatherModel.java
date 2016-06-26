@@ -17,7 +17,8 @@ public class WeatherModel implements Serializable {
     String weatherDescription;
     @SerializedName("icon")
     String icon;
-    byte[] imageByteArray;
+    Bitmap myImageBitMap;
+    
 
     public String getWeatherTitle() {
         return weatherTitle;
@@ -39,12 +40,12 @@ public class WeatherModel implements Serializable {
         return icon;
     }
 
-    public byte[] getImageByteArray() {
-        return imageByteArray;
+    public Bitmap getMyImageBitMap() {
+        return myImageBitMap;
     }
 
-    public void setImageByteArray(byte[] imageByteArray) {
-        this.imageByteArray = imageByteArray;
+    public void setMyImageBitMap(Bitmap myImageBitMap) {
+        this.myImageBitMap = myImageBitMap;
     }
 
     public void setIcon(String icon) {
