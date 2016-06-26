@@ -18,28 +18,32 @@ public class XebiaWeatherMainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mainApplication= this;
+        mainApplication = this;
     }
 
-    public RequestQueue getRequestQueue(){
-        if(volleyrequestQueue ==null){
+    public static XebiaWeatherMainApplication getInstance() {
+        return mainApplication;
+    }
+
+    public RequestQueue getRequestQueue() {
+        if (volleyrequestQueue == null) {
             volleyrequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
         return volleyrequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> request,String tag){
-        request.setTag(tag==null?tagForRequestQueue:tag);
+    public <T> void addToRequestQueue(Request<T> request, String tag) {
+        request.setTag(tag == null ? tagForRequestQueue : tag);
         getRequestQueue().add(request);
     }
 
-    public <T> void addToRequestQueue(Request<T> request){
+    public <T> void addToRequestQueue(Request<T> request) {
         request.setTag(tagForRequestQueue);
         getRequestQueue().add(request);
     }
 
-    public void cancelPendingRequest(Object tag){
-        if(volleyrequestQueue!=null){
+    public void cancelPendingRequest(Object tag) {
+        if (volleyrequestQueue != null) {
             volleyrequestQueue.cancelAll(tag);
         }
     }
