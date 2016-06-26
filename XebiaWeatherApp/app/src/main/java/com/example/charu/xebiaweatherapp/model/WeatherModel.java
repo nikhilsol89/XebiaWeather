@@ -4,17 +4,20 @@ import android.graphics.Bitmap;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+
 /**
  * Created by Charu on 6/26/2016.
  */
-public class WeatherModel {
+public class WeatherModel implements Serializable {
     @SerializedName("main")
     String weatherTitle;
     @SerializedName("description")
     String weatherDescription;
     @SerializedName("icon")
     String icon;
-    Bitmap imageBitMap;
+    byte[] imageByteArray;
 
     public String getWeatherTitle() {
         return weatherTitle;
@@ -36,12 +39,12 @@ public class WeatherModel {
         return icon;
     }
 
-    public Bitmap getImageBitMap() {
-        return imageBitMap;
+    public byte[] getImageByteArray() {
+        return imageByteArray;
     }
 
-    public void setImageBitMap(Bitmap imageBitMap) {
-        this.imageBitMap = imageBitMap;
+    public void setImageByteArray(byte[] imageByteArray) {
+        this.imageByteArray = imageByteArray;
     }
 
     public void setIcon(String icon) {

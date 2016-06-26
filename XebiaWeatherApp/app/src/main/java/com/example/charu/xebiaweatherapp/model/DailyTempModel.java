@@ -2,12 +2,13 @@ package com.example.charu.xebiaweatherapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Charu on 6/26/2016.
  */
-public class DailyTempModel {
+public class DailyTempModel implements Serializable {
 
     @SerializedName("temp")
     TemperatureModel temperatureModel;
@@ -59,12 +60,22 @@ public class DailyTempModel {
     public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
+
     public ArrayList<WeatherModel> getWeatherModel() {
         return weatherModel;
     }
+
 
     public void setWeatherModel(ArrayList<WeatherModel> weatherModel) {
         this.weatherModel = weatherModel;
     }
 
+    public TemperatureModel getTemperatureModel() {
+        return temperatureModel;
+    }
+
+    public void setTemperatureModel(TemperatureModel temperatureModel) {
+        this.temperatureModel = temperatureModel;
+
+    }
 }
