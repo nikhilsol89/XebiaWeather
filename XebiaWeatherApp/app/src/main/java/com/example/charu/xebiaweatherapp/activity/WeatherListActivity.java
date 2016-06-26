@@ -1,12 +1,14 @@
 package com.example.charu.xebiaweatherapp.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,6 +18,7 @@ import com.example.charu.xebiaweatherapp.R;
 import com.example.charu.xebiaweatherapp.UrlConstants;
 import com.example.charu.xebiaweatherapp.adapter.WeatherListAdapter;
 import com.example.charu.xebiaweatherapp.application.XebiaWeatherMainApplication;
+import com.example.charu.xebiaweatherapp.listener.WeatherCellClickListener;
 import com.example.charu.xebiaweatherapp.model.CityDataModel;
 import com.example.charu.xebiaweatherapp.model.DailyTempModel;
 import com.example.charu.xebiaweatherapp.model.WeatherDataModel;
@@ -23,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -31,12 +35,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class WeatherListActivity extends AppCompatActivity {
+public class WeatherListActivity extends AppCompatActivity implements WeatherCellClickListener {
 
     private String tag_weather_request = "fetch_weather";
     private ProgressDialog pDialog;
     private RecyclerView recyclerView;
     private WeatherListAdapter listAdapter;
+    private WeatherDataModel weatherDataModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class WeatherListActivity extends AppCompatActivity {
         this.recyclerView.setLayoutManager(linearLayoutManager);
         this.recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        this.listAdapter = new WeatherListAdapter(this);
+        this.listAdapter = new WeatherListAdapter(this,this);
         this.recyclerView.setAdapter(this.listAdapter);
 
         makeWeatherCall();
@@ -80,27 +85,42 @@ public class WeatherListActivity extends AppCompatActivity {
     });
 
     private void parseWeatherResponse(JSONObject response) {
-        WeatherDataModel weatherDataModel = new WeatherDataModel();
+        weatherDataModel = new WeatherDataModel();
         try {
-            Gson gson = new Gson();
-            weatherDataModel.setCityDataModel(gson.fromJson(response.getJSONObject("city").toString(), CityDataModel.class));
+            if (response.getString("cod").equals("200")) {
+                Gson gson = new Gson();
+                weatherDataModel.setCityDataModel(gson.fromJson(response.getJSONObject("city").toString(), CityDataModel.class));
 
-            Log.e("nikhil", "city" + weatherDataModel.getCityDataModel().getName() + " "
-                    + weatherDataModel.getCityDataModel().getCountry());
+                Log.e("nikhil", "city" + weatherDataModel.getCityDataModel().getName() + " "
+                        + weatherDataModel.getCityDataModel().getCountry());
 
-            List<DailyTempModel> postsList = Arrays.asList(gson.fromJson(response.getJSONArray("list").toString(),
-                    DailyTempModel[].class));
-            weatherDataModel.setDailyTempModelList(postsList);
+                List<DailyTempModel> postsList = Arrays.asList(gson.fromJson(response.getJSONArray("list").toString(),
+                        DailyTempModel[].class));
+                weatherDataModel.setDailyTempModelList(postsList);
 
+            }
+
+            Log.e("nikhil", "size " + weatherDataModel.getDailyTempModelList().size());
+            if (weatherDataModel != null) {
+                this.listAdapter.setWeatherDataModel(weatherDataModel);
+                this.listAdapter.notifyDataSetChanged();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Weather Api Error", Toast.LENGTH_LONG).show();
         } catch (Exception ex) {
             Log.e("nikhil", "ex " + ex.getMessage());
+            Toast.makeText(this, "Weather Api Error", Toast.LENGTH_LONG).show();
         }
 
-        Log.e("nikhil", "size " + weatherDataModel.getDailyTempModelList().size());
-        if (weatherDataModel != null) {
-            this.listAdapter.setWeatherDataModel(weatherDataModel);
-            this.listAdapter.notifyDataSetChanged();
-        }
+    }
 
+    @Override
+    public void cellClicked(int position) {
+
+        Intent intent = new Intent(WeatherListActivity.this,WeatherDetailActivity.class);
+        intent.putExtra("weather",weatherDataModel);
+        intent.putExtra("position",position);
+        startActivity(intent);
     }
 }

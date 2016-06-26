@@ -2,10 +2,12 @@ package com.example.charu.xebiaweatherapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Charu on 6/26/2016.
  */
-public class TemperatureModel {
+public class TemperatureModel implements Serializable {
     @SerializedName("min")
     String minimumTemp;
     @SerializedName("max")

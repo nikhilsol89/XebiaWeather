@@ -2,10 +2,12 @@ package com.example.charu.xebiaweatherapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Charu on 6/26/2016.
  */
-public class WeatherModel {
+public class WeatherModel implements Serializable {
     @SerializedName("main")
     String weatherTitle;
     @SerializedName("description")
