@@ -2,6 +2,8 @@ package com.example.charu.xebiaweatherapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by Charu on 6/26/2016.
  */
@@ -10,7 +12,7 @@ public class DailyTempModel {
     @SerializedName("temp")
     TemperatureModel temperatureModel;
     @SerializedName("weather")
-    WeatherModel weatherModel;
+    ArrayList<WeatherModel> weatherModel;
     @SerializedName("dt")
     String date;
     @SerializedName("pressure")
@@ -23,7 +25,7 @@ public class DailyTempModel {
 
     public DailyTempModel() {
         this.temperatureModel = new TemperatureModel();
-        this.weatherModel = new WeatherModel();
+        this.weatherModel = new ArrayList<WeatherModel>();
     }
 
     public String getDate() {

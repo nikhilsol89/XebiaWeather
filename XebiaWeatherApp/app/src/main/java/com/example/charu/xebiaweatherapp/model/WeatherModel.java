@@ -10,6 +10,8 @@ public class WeatherModel {
     String weatherTitle;
     @SerializedName("description")
     String weatherDescription;
+    @SerializedName("icon")
+    String icon;
 
     public String getWeatherTitle() {
         return weatherTitle;
@@ -25,5 +27,13 @@ public class WeatherModel {
 
     public void setWeatherDescription(String weatherDescription) {
         this.weatherDescription = weatherDescription;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

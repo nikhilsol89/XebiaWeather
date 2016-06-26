@@ -1,5 +1,7 @@
 package com.example.charu.xebiaweatherapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,9 @@ import java.util.List;
  */
 public class WeatherDataModel {
 
+    @SerializedName("city")
     CityDataModel cityDataModel;
+    @SerializedName("list")
     List<DailyTempModel> dailyTempModelList;
 
     public WeatherDataModel() {

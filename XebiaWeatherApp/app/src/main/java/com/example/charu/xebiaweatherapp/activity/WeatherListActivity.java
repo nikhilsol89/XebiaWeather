@@ -20,11 +20,16 @@ import com.example.charu.xebiaweatherapp.model.CityDataModel;
 import com.example.charu.xebiaweatherapp.model.DailyTempModel;
 import com.example.charu.xebiaweatherapp.model.WeatherDataModel;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class WeatherListActivity extends AppCompatActivity {
 
@@ -38,7 +43,7 @@ public class WeatherListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.recyclerView =  (RecyclerView)findViewById(R.id.weather_list);
+        this.recyclerView = (RecyclerView) findViewById(R.id.weather_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         this.recyclerView.setLayoutManager(linearLayoutManager);
@@ -78,23 +83,21 @@ public class WeatherListActivity extends AppCompatActivity {
         WeatherDataModel weatherDataModel = new WeatherDataModel();
         try {
             Gson gson = new Gson();
-            weatherDataModel.setCityDataModel( gson.fromJson(response.getJSONObject("city").toString(),CityDataModel.class));
+            weatherDataModel.setCityDataModel(gson.fromJson(response.getJSONObject("city").toString(), CityDataModel.class));
 
-            Log.e("nikhil","city" +weatherDataModel.getCityDataModel().getName()+ " "
-                    +weatherDataModel.getCityDataModel().getCountry());
+            Log.e("nikhil", "city" + weatherDataModel.getCityDataModel().getName() + " "
+                    + weatherDataModel.getCityDataModel().getCountry());
 
-            JSONArray jsonArray = response.getJSONArray("list");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                Log.e("nikhil","iteration "+i);
-                weatherDataModel.getDailyTempModelList().add(gson.fromJson(jsonArray.get(i).toString(), DailyTempModel.class));
-            }
+            List<DailyTempModel> postsList = Arrays.asList(gson.fromJson(response.getJSONArray("list").toString(),
+                    DailyTempModel[].class));
+            weatherDataModel.setDailyTempModelList(postsList);
 
         } catch (Exception ex) {
-            Log.e("nikhil",ex.getMessage());
+            Log.e("nikhil", "ex " + ex.getMessage());
         }
 
-        Log.e("nikhil","size "+weatherDataModel.getDailyTempModelList().size());
-        if(weatherDataModel!=null){
+        Log.e("nikhil", "size " + weatherDataModel.getDailyTempModelList().size());
+        if (weatherDataModel != null) {
             this.listAdapter.setWeatherDataModel(weatherDataModel);
             this.listAdapter.notifyDataSetChanged();
         }
