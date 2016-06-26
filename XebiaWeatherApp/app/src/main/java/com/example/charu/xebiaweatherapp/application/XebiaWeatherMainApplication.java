@@ -4,7 +4,9 @@ import android.app.Application;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.example.charu.xebiaweatherapp.model.LruBitmapCache;
 
 /**
  * Created by Charu on 6/26/2016.
@@ -13,6 +15,7 @@ public class XebiaWeatherMainApplication extends Application {
 
     String tagForRequestQueue = XebiaWeatherMainApplication.class.getSimpleName();
     RequestQueue volleyrequestQueue;
+    ImageLoader volleyImageLoader;
     private static XebiaWeatherMainApplication mainApplication;
 
     @Override
@@ -30,6 +33,15 @@ public class XebiaWeatherMainApplication extends Application {
             volleyrequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
         return volleyrequestQueue;
+    }
+
+    public ImageLoader getImageLoader() {
+        getRequestQueue();
+        if (volleyImageLoader == null) {
+            volleyImageLoader = new ImageLoader(this.volleyrequestQueue,
+                    new LruBitmapCache());
+        }
+        return this.volleyImageLoader;
     }
 
     public <T> void addToRequestQueue(Request<T> request, String tag) {

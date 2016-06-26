@@ -59,6 +59,12 @@ public class DailyTempModel {
     public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
+    public ArrayList<WeatherModel> getWeatherModel() {
+        return weatherModel;
+    }
 
+    public void setWeatherModel(ArrayList<WeatherModel> weatherModel) {
+        this.weatherModel = weatherModel;
+    }
 
 }

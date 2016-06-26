@@ -11,6 +11,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.charu.xebiaweatherapp.R;
 import com.example.charu.xebiaweatherapp.UrlConstants;
@@ -23,12 +24,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class WeatherListActivity extends AppCompatActivity {
@@ -37,6 +40,8 @@ public class WeatherListActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private RecyclerView recyclerView;
     private WeatherListAdapter listAdapter;
+    WeatherDataModel weatherDataModel;
+    int position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +73,18 @@ public class WeatherListActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.e("nikhil", response.toString());
-                    parseWeatherResponse(response);
+                    try{
+                        if(response.getString("cod").equalsIgnoreCase("200")){
+                            parseWeatherResponse(response);
+                        }else if(!response.getString("cod").equalsIgnoreCase("200")){
+                            return;
+                        }
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
                     pDialog.hide();
                 }
             }, new Response.ErrorListener() {
@@ -80,7 +96,7 @@ public class WeatherListActivity extends AppCompatActivity {
     });
 
     private void parseWeatherResponse(JSONObject response) {
-        WeatherDataModel weatherDataModel = new WeatherDataModel();
+       weatherDataModel  = new WeatherDataModel();
         try {
             Gson gson = new Gson();
             weatherDataModel.setCityDataModel(gson.fromJson(response.getJSONObject("city").toString(), CityDataModel.class));
@@ -91,6 +107,29 @@ public class WeatherListActivity extends AppCompatActivity {
             List<DailyTempModel> postsList = Arrays.asList(gson.fromJson(response.getJSONArray("list").toString(),
                     DailyTempModel[].class));
             weatherDataModel.setDailyTempModelList(postsList);
+
+            ImageLoader imageLoader = XebiaWeatherMainApplication.getInstance().getImageLoader();
+            for(int i =0;i<weatherDataModel.getDailyTempModelList().size();i++){
+                String iconUrl = UrlConstants.fetchIconUrl+weatherDataModel.getDailyTempModelList().get(i).getWeatherModel().get(0).getIcon()+".png";
+                this.position= i;
+// If you are using normal ImageView
+                imageLoader.get(iconUrl, new ImageLoader.ImageListener() {
+
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        if (response.getBitmap() != null) {
+                            // load image into imageview
+                            Log.e("nikhil","Bitmap came");
+                            weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).setImageBitMap(response.getBitmap());
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("nikhil", "Image Load Error: " + error.getMessage());
+                    }
+                });
+            }
 
         } catch (Exception ex) {
             Log.e("nikhil", "ex " + ex.getMessage());

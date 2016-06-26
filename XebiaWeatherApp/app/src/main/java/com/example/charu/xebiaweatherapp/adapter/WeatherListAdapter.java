@@ -38,6 +38,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {
+           holder.weatherIconImageView.setImageBitmap(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageBitMap());
            // holder.dateTextView.setText(new SimpleDateFormat("YYYY-MM-dd").format(new Date(weatherDataModel.getDailyTempModelList().get(position).getDate())));
     }
 
