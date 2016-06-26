@@ -116,24 +116,31 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
 
             ImageLoader imageLoader = XebiaWeatherMainApplication.getInstance().getImageLoader();
             for (int i = 0; i < weatherDataModel.getDailyTempModelList().size(); i++) {
-                String iconUrl = UrlConstants.fetchIconUrl + weatherDataModel.getDailyTempModelList().get(i).getWeatherModel().get(0).getIcon() + ".png";
                 this.position = i;
-                Log.e("nikhil", "iconUrl "+iconUrl);
-            // If you are using normal ImageView
+                String iconUrl = UrlConstants.fetchIconUrl + weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getIcon() + ".png";
+
+                Log.e("nikhil", "iconUrl " + iconUrl);
+                // If you are using normal ImageView
                 imageLoader.get(iconUrl, new ImageLoader.ImageListener() {
 
                     @Override
                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                         if (response.getBitmap() != null) {
                             // load image into imageview
-                            Log.e("nikhil", "Bitmap came "+response.getBitmap());
+                            Log.e("nikhil", "Bitmap came " + response.getBitmap());
+
                             Bitmap bmp = response.getBitmap();
 
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                             byte[] byteArray = stream.toByteArray();
-                            Log.e("nikhil","Byte Array Lenghth:"+byteArray.length);
+                            Log.e("nikhil", "Byte Array Lenghth:" + byteArray.length);
                             weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).setImageByteArray(byteArray);
+                            if (weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray() != null) {
+                                listAdapter.setWeatherDataModel(weatherDataModel);
+                                listAdapter.notifyDataSetChanged();
+                            }
+
                         }
                     }
 
@@ -144,8 +151,8 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
                 });
             }
             if (weatherDataModel != null) {
-                this.listAdapter.setWeatherDataModel(weatherDataModel);
-                this.listAdapter.notifyDataSetChanged();
+                listAdapter.setWeatherDataModel(weatherDataModel);
+                listAdapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
             Log.e("nikhil", "ex " + e.getMessage());

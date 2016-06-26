@@ -2,4 +2,7 @@
     <string name="app_name">XebiaWeatherApp</string>
     <string name="degree_unit">\u00b0</string>
     <string name="weather_unit">C</string>
+    <string name="text_pressure">Pressure</string>
+    <string name="text_humidity">Humidity</string>
+    <string name="text_windSpeed">Speed</string>
 </resources>

@@ -57,9 +57,9 @@ public class WeatherDetailActivity extends AppCompatActivity {
         this.tempTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getTemperatureModel().getDayTemp() + this.getString(R.string.weather_unit));
         this.titleWeatherTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getWeatherTitle());
         this.descriptionTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getWeatherDescription());
-        this.humidityTextview.setText(weatherDataModel.getDailyTempModelList().get(position).getHumidity());
-        this.pressureTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getPressure());
-        this.windSpeedTextview.setText(weatherDataModel.getDailyTempModelList().get(position).getWindSpeed());
+        this.humidityTextview.setText(getString(R.string.text_humidity)+":"+weatherDataModel.getDailyTempModelList().get(position).getHumidity());
+        this.pressureTextView.setText(getString(R.string.text_pressure)+":"+weatherDataModel.getDailyTempModelList().get(position).getPressure());
+        this.windSpeedTextview.setText(getString(R.string.text_windSpeed)+":"+weatherDataModel.getDailyTempModelList().get(position).getWindSpeed());
     }
 
 }

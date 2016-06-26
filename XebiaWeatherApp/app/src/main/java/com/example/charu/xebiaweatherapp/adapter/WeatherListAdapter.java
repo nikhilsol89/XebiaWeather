@@ -3,6 +3,7 @@ package com.example.charu.xebiaweatherapp.adapter;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {
-
-        holder.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(), 0, this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
+        if (this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray() != null) {
+            Log.e("nikhil", "weaher " + weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length + " ");
+            holder.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(), 0, this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
+        }
         holder.dateTextView.setText(new SimpleDateFormat("EEE dd MMM,yyyy").
                 format(new Date(Long.parseLong(weatherDataModel.getDailyTempModelList().get(position).getDate()) * 1000)));
         holder.tempTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getTemperatureModel().getDayTemp() + context.getString(R.string.weather_unit));
