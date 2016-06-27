@@ -2,11 +2,14 @@ package com.nikhil.xebiaweatherapp.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,9 +43,10 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.e("nikhil","Inside On Create method");
         this.recyclerView = (RecyclerView) findViewById(R.id.weather_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -53,6 +57,18 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
         this.recyclerView.setAdapter(this.listAdapter);
 
         makeWeatherCall();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("nikhil","Inside On Resume method");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.e("nikhil","Inside On SaveInstance method");
     }
 
     private void makeWeatherCall() {
@@ -79,11 +95,13 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
                         e.printStackTrace();
                     }
                     pDialog.hide();
+                    pDialog.dismiss();
                 }
             }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
             pDialog.hide();
+            pDialog.dismiss();
         }
     });
 
@@ -112,7 +130,6 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
 
     @Override
     public void cellClicked(int position) {
-
         Intent intent = new Intent(WeatherListActivity.this, WeatherDetailActivity.class);
         intent.putExtra("weather", weatherDataModel);
         intent.putExtra("position", position);

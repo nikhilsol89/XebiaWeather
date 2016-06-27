@@ -36,8 +36,6 @@ public class WeatherDetailActivity extends AppCompatActivity {
         if (this.weatherDataModel != null) {
             setData();
         }
-
-
     }
 
     private void initViews() {

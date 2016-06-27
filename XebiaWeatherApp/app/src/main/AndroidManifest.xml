@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".activity.WeatherListActivity"
-            android:screenOrientation="portrait">
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".activity.WeatherDetailActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>
