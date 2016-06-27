@@ -47,6 +47,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             Log.e("nikhil", "weaher " + weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length + " ");
             holder.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(), 0, this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
         }
+
         holder.dateTextView.setText(new SimpleDateFormat("EEE dd MMM,yyyy").
                 format(new Date(Long.parseLong(weatherDataModel.getDailyTempModelList().get(position).getDate()) * 1000)));
         holder.tempTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getTemperatureModel().getDayTemp() + context.getString(R.string.weather_unit));
