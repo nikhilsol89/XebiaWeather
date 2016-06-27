@@ -46,7 +46,6 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("nikhil","Inside On Create method");
         this.recyclerView = (RecyclerView) findViewById(R.id.weather_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -62,13 +61,6 @@ public class WeatherListActivity extends AppCompatActivity implements WeatherCel
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("nikhil","Inside On Resume method");
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        Log.e("nikhil","Inside On SaveInstance method");
     }
 
     private void makeWeatherCall() {
