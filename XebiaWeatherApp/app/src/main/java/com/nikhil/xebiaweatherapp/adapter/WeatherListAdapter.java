@@ -57,7 +57,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         holder.dateTextView.setText(new SimpleDateFormat("EEE dd MMM,yyyy").
                 format(new Date(Long.parseLong(weatherDataModel.getDailyTempModelList().get(position).getDate()) * 1000)));
         holder.tempTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getTemperatureModel().getDayTemp() + context.getString(R.string.weather_unit));
-        holder.titleWeatherTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getWeatherTitle());
+        holder.humidityTextView.setText(context.getString(R.string.text_humidity)+":"+weatherDataModel.getDailyTempModelList().get(position).getHumidity());
         holder.descriptionTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getWeatherDescription());
 
         ImageLoader imageLoader = XebiaWeatherMainApplication.getInstance().getImageLoader();
@@ -98,7 +98,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
         View view;
         ImageView weatherIconImageView;
-        TextView dateTextView, tempTextView, titleWeatherTextView, descriptionTextView;
+        TextView dateTextView, tempTextView, humidityTextView, descriptionTextView;
 
         public WeatherViewHolder(View itemView) {
             super(itemView);
@@ -106,7 +106,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
             this.dateTextView = (TextView) this.view.findViewById(R.id.dateText);
             this.tempTextView = (TextView) this.view.findViewById(R.id.temperatureText);
-            this.titleWeatherTextView = (TextView) this.view.findViewById(R.id.titleWeatherText);
+            this.humidityTextView = (TextView) this.view.findViewById(R.id.humidityText);
             this.descriptionTextView = (TextView) this.view.findViewById(R.id.descriptionText);
             this.weatherIconImageView = (ImageView) this.view.findViewById(R.id.weather_icon);
 

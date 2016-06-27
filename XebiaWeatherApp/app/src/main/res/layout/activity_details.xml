@@ -89,5 +89,29 @@
         android:text="@string/text_windSpeed"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/details_cloudText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/text_cloud"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/details_rainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/text_rain"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/details_degText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/text_deg"
+        android:textSize="18sp" />
+
 </LinearLayout>
 

@@ -5,4 +5,7 @@
     <string name="text_pressure">Pressure</string>
     <string name="text_humidity">Humidity</string>
     <string name="text_windSpeed">Speed</string>
+    <string name="text_cloud">Cloud</string>
+    <string name="text_rain">Rain</string>
+    <string name="text_deg">deg</string>
 </resources>

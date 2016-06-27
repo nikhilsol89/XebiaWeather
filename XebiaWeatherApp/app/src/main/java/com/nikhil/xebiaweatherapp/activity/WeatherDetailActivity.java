@@ -19,7 +19,7 @@ public class WeatherDetailActivity extends AppCompatActivity {
 
     private WeatherDataModel weatherDataModel;
     ImageView weatherIconImageView;
-    TextView dateTextView, tempTextView, titleWeatherTextView, descriptionTextView, pressureTextView, humidityTextview, windSpeedTextview;
+    TextView dateTextView, tempTextView, titleWeatherTextView, descriptionTextView, pressureTextView, humidityTextview, windSpeedTextview, cloudTextView, rainTextView, degTextView;
     int position;
 
     @Override
@@ -48,6 +48,9 @@ public class WeatherDetailActivity extends AppCompatActivity {
         this.windSpeedTextview = (TextView) findViewById(R.id.details_windSpeedText);
         this.titleWeatherTextView = (TextView) findViewById(R.id.details_titleWeatherText);
         this.descriptionTextView = (TextView) findViewById(R.id.details_descriptionText);
+        this.cloudTextView = (TextView) findViewById(R.id.details_cloudText);
+        this.rainTextView = (TextView) findViewById(R.id.details_rainText);
+        this.degTextView = (TextView) findViewById(R.id.details_degText);
         this.weatherIconImageView = (ImageView) findViewById(R.id.details_weather_icon);
 
     }
@@ -61,6 +64,9 @@ public class WeatherDetailActivity extends AppCompatActivity {
         this.humidityTextview.setText(getString(R.string.text_humidity)+":"+weatherDataModel.getDailyTempModelList().get(position).getHumidity());
         this.pressureTextView.setText(getString(R.string.text_pressure)+":"+weatherDataModel.getDailyTempModelList().get(position).getPressure());
         this.windSpeedTextview.setText(getString(R.string.text_windSpeed)+":"+weatherDataModel.getDailyTempModelList().get(position).getWindSpeed());
+        this.cloudTextView.setText(getString(R.string.text_cloud)+":"+weatherDataModel.getDailyTempModelList().get(position).getClouds());
+        this.rainTextView.setText(getString(R.string.text_rain)+":"+weatherDataModel.getDailyTempModelList().get(position).getRain());
+        this.degTextView.setText(getString(R.string.text_deg)+":"+weatherDataModel.getDailyTempModelList().get(position).getDeg());
         this.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(), 0, this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
     }
 
