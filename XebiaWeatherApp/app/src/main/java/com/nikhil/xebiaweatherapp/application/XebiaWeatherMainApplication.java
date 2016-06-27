@@ -23,7 +23,6 @@ public class XebiaWeatherMainApplication extends Application {
         super.onCreate();
         mainApplication = this;
     }
-
     public static XebiaWeatherMainApplication getInstance() {
         return mainApplication;
     }
