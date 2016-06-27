@@ -1,7 +1,7 @@
-package com.example.charu.xebiaweatherapp;
+package com.nikhil.xebiaweatherapp;
 
 /**
- * Created by Charu on 6/26/2016.
+ * Created by nikhil on 6/26/2016.
  */
 public class UrlConstants {
 

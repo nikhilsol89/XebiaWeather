@@ -1,24 +1,29 @@
-package com.example.charu.xebiaweatherapp.adapter;
+package com.nikhil.xebiaweatherapp.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.charu.xebiaweatherapp.R;
-import com.example.charu.xebiaweatherapp.activity.WeatherListActivity;
-import com.example.charu.xebiaweatherapp.model.WeatherDataModel;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.nikhil.xebiaweatherapp.R;
+import com.nikhil.xebiaweatherapp.UrlConstants;
+import com.nikhil.xebiaweatherapp.activity.WeatherListActivity;
+import com.nikhil.xebiaweatherapp.application.XebiaWeatherMainApplication;
+import com.nikhil.xebiaweatherapp.model.WeatherDataModel;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Charu on 6/26/2016.
+ * Created by nikhil on 6/26/2016.
  */
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.WeatherViewHolder> {
 
@@ -42,10 +47,11 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(WeatherViewHolder holder, int position) {
+    public void onBindViewHolder(final WeatherViewHolder holder, final int position) {
+        holder.weatherIconImageView.setImageBitmap(null);
         if (this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray() != null) {
-            Log.e("nikhil", "weaher " + weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length + " ");
-            holder.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(), 0, this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
+            holder.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(),
+                    0, this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
         }
 
         holder.dateTextView.setText(new SimpleDateFormat("EEE dd MMM,yyyy").
@@ -53,6 +59,32 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         holder.tempTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getTemperatureModel().getDayTemp() + context.getString(R.string.weather_unit));
         holder.titleWeatherTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getWeatherTitle());
         holder.descriptionTextView.setText(weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getWeatherDescription());
+
+        ImageLoader imageLoader = XebiaWeatherMainApplication.getInstance().getImageLoader();
+        String iconUrl = UrlConstants.fetchIconUrl + weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getIcon() + ".png";
+
+        imageLoader.get(iconUrl, new ImageLoader.ImageListener() {
+
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                if (response.getBitmap() != null) {
+                    Bitmap bmp = response.getBitmap();
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).setImageByteArray(byteArray);
+                    if (weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray() != null) {
+                        holder.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(), 0, weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
     }
 
     @Override
@@ -86,4 +118,5 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             });
         }
     }
+
 }

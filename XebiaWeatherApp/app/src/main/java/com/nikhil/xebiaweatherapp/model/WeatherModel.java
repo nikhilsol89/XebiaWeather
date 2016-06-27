@@ -1,4 +1,4 @@
-package com.example.charu.xebiaweatherapp.model;
+package com.nikhil.xebiaweatherapp.model;
 
 import android.graphics.Bitmap;
 
@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 /**
- * Created by Charu on 6/26/2016.
+ * Created by nikhil on 6/26/2016.
  */
 public class WeatherModel implements Serializable {
     @SerializedName("main")

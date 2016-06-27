@@ -1,4 +1,4 @@
-package com.example.charu.xebiaweatherapp.model;
+package com.nikhil.xebiaweatherapp.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

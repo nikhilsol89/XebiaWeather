@@ -1,4 +1,4 @@
-package com.example.charu.xebiaweatherapp.model;
+package com.nikhil.xebiaweatherapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Charu on 6/26/2016.
+ * Created by nikhil on 6/26/2016.
  */
 public class WeatherDataModel implements Serializable {
 

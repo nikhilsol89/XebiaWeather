@@ -1,18 +1,19 @@
-package com.example.charu.xebiaweatherapp.activity;
+package com.nikhil.xebiaweatherapp.activity;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.charu.xebiaweatherapp.R;
-import com.example.charu.xebiaweatherapp.model.WeatherDataModel;
+import com.nikhil.xebiaweatherapp.R;
+import com.nikhil.xebiaweatherapp.model.WeatherDataModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Charu on 6/26/2016.
+ * Created by nikhil on 6/26/2016.
  */
 public class WeatherDetailActivity extends AppCompatActivity {
 
@@ -60,6 +61,7 @@ public class WeatherDetailActivity extends AppCompatActivity {
         this.humidityTextview.setText(getString(R.string.text_humidity)+":"+weatherDataModel.getDailyTempModelList().get(position).getHumidity());
         this.pressureTextView.setText(getString(R.string.text_pressure)+":"+weatherDataModel.getDailyTempModelList().get(position).getPressure());
         this.windSpeedTextview.setText(getString(R.string.text_windSpeed)+":"+weatherDataModel.getDailyTempModelList().get(position).getWindSpeed());
+        this.weatherIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray(), 0, this.weatherDataModel.getDailyTempModelList().get(position).getWeatherModel().get(0).getImageByteArray().length));
     }
 
 }

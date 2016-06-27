@@ -1,4 +1,4 @@
-package com.example.charu.xebiaweatherapp.application;
+package com.nikhil.xebiaweatherapp.application;
 
 import android.app.Application;
 
@@ -6,10 +6,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.example.charu.xebiaweatherapp.model.LruBitmapCache;
+import com.nikhil.xebiaweatherapp.model.LruBitmapCache;
 
 /**
- * Created by Charu on 6/26/2016.
+ * Created by nikhil on 6/26/2016.
  */
 public class XebiaWeatherMainApplication extends Application {
 

@@ -1,4 +1,4 @@
-package com.example.charu.xebiaweatherapp.model;
+package com.nikhil.xebiaweatherapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Charu on 6/26/2016.
+ * Created by nikhil on 6/26/2016.
  */
 public class DailyTempModel implements Serializable {
 
